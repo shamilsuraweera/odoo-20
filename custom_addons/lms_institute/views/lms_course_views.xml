@@ -1,0 +1,146 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="lms_course_view_search" model="ir.ui.view">
+        <field name="name">lms.course.search</field>
+        <field name="model">lms.course</field>
+        <field name="arch" type="xml">
+            <search string="Courses">
+                <field name="name" string="Course" filter_domain="['|', ('name', 'ilike', self), ('code', 'ilike', self)]"/>
+                <field name="instructor_id"/>
+                <filter name="published" string="Published" domain="[('state', '=', 'published')]"/>
+                <filter name="draft" string="Draft" domain="[('state', '=', 'draft')]"/>
+                <filter name="my_courses" string="My Courses" domain="[('instructor_id', '=', uid)]"/>
+                <separator/>
+                <filter name="archived" string="Archived" domain="[('active', '=', False)]"/>
+                <group>
+                    <filter name="group_state" string="Status" context="{'group_by': 'state'}"/>
+                    <filter name="group_instructor" string="Instructor" context="{'group_by': 'instructor_id'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <record id="lms_course_view_list" model="ir.ui.view">
+        <field name="name">lms.course.list</field>
+        <field name="model">lms.course</field>
+        <field name="arch" type="xml">
+            <list string="Courses">
+                <field name="code"/>
+                <field name="name"/>
+                <field name="instructor_id"/>
+                <field name="duration_hours" widget="float_time"/>
+                <field name="enrollment_count"/>
+                <field name="max_students" optional="hide"/>
+                <field name="fee" widget="monetary" optional="show"/>
+                <field name="currency_id" column_invisible="True"/>
+                <field name="state" widget="badge"
+                       decoration-success="state == 'published'"
+                       decoration-info="state == 'draft'"
+                       decoration-muted="state == 'closed'"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="lms_course_view_kanban" model="ir.ui.view">
+        <field name="name">lms.course.kanban</field>
+        <field name="model">lms.course</field>
+        <field name="arch" type="xml">
+            <kanban default_group_by="state">
+                <field name="currency_id"/>
+                <templates>
+                    <t t-name="card">
+                        <field name="name" class="fw-bold fs-5"/>
+                        <div class="text-muted"><field name="code"/></div>
+                        <div><field name="instructor_id"/></div>
+                        <div class="d-flex justify-content-between mt-2">
+                            <span><field name="enrollment_count"/> enrolled</span>
+                            <field name="fee" widget="monetary"/>
+                        </div>
+                    </t>
+                </templates>
+            </kanban>
+        </field>
+    </record>
+
+    <record id="lms_course_view_form" model="ir.ui.view">
+        <field name="name">lms.course.form</field>
+        <field name="model">lms.course</field>
+        <field name="arch" type="xml">
+            <form string="Course">
+                <header>
+                    <field name="is_enrolled" invisible="1"/>
+                    <button name="action_enroll_me" string="Enroll me" type="object" class="btn-primary"
+                            invisible="state != 'published' or is_enrolled"
+                            groups="lms_institute.group_lms_student"/>
+                    <button name="action_publish" string="Publish" type="object" class="btn-primary"
+                            invisible="state == 'published'"
+                            groups="lms_institute.group_lms_instructor"/>
+                    <button name="action_close" string="Close" type="object"
+                            invisible="state != 'published'"
+                            groups="lms_institute.group_lms_instructor"/>
+                    <button name="action_draft" string="Set to Draft" type="object"
+                            invisible="state == 'draft'"
+                            groups="lms_institute.group_lms_instructor"/>
+                    <field name="state" widget="statusbar" statusbar_visible="draft,published,closed"/>
+                </header>
+                <sheet>
+                    <widget name="web_ribbon" title="Archived" bg_color="text-bg-danger" invisible="active"/>
+                    <field name="active" invisible="1"/>
+                    <field name="currency_id" invisible="1"/>
+                    <div class="oe_title">
+                        <label for="name"/>
+                        <h1><field name="name" placeholder="e.g. Python Programming"/></h1>
+                    </div>
+                    <group>
+                        <group>
+                            <field name="code"/>
+                            <field name="instructor_id" options="{'no_create': True}"/>
+                        </group>
+                        <group>
+                            <field name="fee"/>
+                            <field name="max_students"/>
+                            <field name="duration_hours" widget="float_time"/>
+                            <field name="enrollment_count"/>
+                        </group>
+                    </group>
+                    <notebook>
+                        <page string="Description" name="description">
+                            <field name="description"/>
+                        </page>
+                        <page string="Lessons" name="lessons">
+                            <field name="lesson_ids">
+                                <list editable="bottom">
+                                    <field name="sequence" widget="handle"/>
+                                    <field name="name"/>
+                                    <field name="duration_minutes"/>
+                                </list>
+                            </field>
+                        </page>
+                        <page string="Enrollments" name="enrollments" groups="lms_institute.group_lms_instructor">
+                            <field name="enrollment_ids">
+                                <list>
+                                    <field name="student_id"/>
+                                    <field name="enrollment_date"/>
+                                    <field name="progress" widget="progressbar"/>
+                                    <field name="grade"/>
+                                    <field name="state" widget="badge"/>
+                                </list>
+                            </field>
+                        </page>
+                    </notebook>
+                </sheet>
+                <chatter/>
+            </form>
+        </field>
+    </record>
+
+    <record id="lms_course_action" model="ir.actions.act_window">
+        <field name="name">Courses</field>
+        <field name="res_model">lms.course</field>
+        <field name="view_mode">kanban,list,form</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">Create your first course</p>
+            <p>Courses hold lessons and the students who enroll in them.</p>
+        </field>
+    </record>
+</odoo>

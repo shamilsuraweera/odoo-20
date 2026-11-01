@@ -1,0 +1,10 @@
+id,name,model_id,group_id/id,operation,domain
+access_lms_course_student,Course: students read published courses,lms.course,group_lms_student,r,"[('state', '=', 'published')]"
+access_lms_course_instructor,Course: instructors manage their own courses,lms.course,group_lms_instructor,cru,"[('instructor_id', '=', user.id)]"
+access_lms_course_manager,Course: managers have full access,lms.course,group_lms_manager,crud,
+access_lms_lesson_student,Lesson: students read lessons of their courses,lms.lesson,group_lms_student,r,"[('course_id.enrollment_ids', 'any', [('student_id', '=', user.id), ('state', '!=', 'dropped')])]"
+access_lms_lesson_instructor,Lesson: instructors manage lessons of their courses,lms.lesson,group_lms_instructor,crud,"[('course_id.instructor_id', '=', user.id)]"
+access_lms_lesson_manager,Lesson: managers have full access,lms.lesson,group_lms_manager,crud,
+access_lms_enrollment_student,Enrollment: students read their own enrollments,lms.enrollment,group_lms_student,r,"[('student_id', '=', user.id)]"
+access_lms_enrollment_instructor,Enrollment: instructors manage enrollments of their courses,lms.enrollment,group_lms_instructor,cru,"[('course_id.instructor_id', '=', user.id)]"
+access_lms_enrollment_manager,Enrollment: managers have full access,lms.enrollment,group_lms_manager,crud,

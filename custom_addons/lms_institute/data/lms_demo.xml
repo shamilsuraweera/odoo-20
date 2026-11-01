@@ -1,0 +1,156 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo noupdate="1">
+    <!-- Courses -->
+    <record id="course_python" model="lms.course">
+        <field name="name">Python Programming</field>
+        <field name="code">CS101</field>
+        <field name="instructor_id" ref="user_lms_instructor_1"/>
+        <field name="state">published</field>
+        <field name="fee">15000</field>
+        <field name="max_students">30</field>
+        <field name="description"><![CDATA[<p>A hands-on introduction to programming with Python: variables, control flow, functions and files.</p>]]></field>
+    </record>
+    <record id="course_data_science" model="lms.course">
+        <field name="name">Introduction to Data Science</field>
+        <field name="code">DS201</field>
+        <field name="instructor_id" ref="user_lms_instructor_1"/>
+        <field name="state">published</field>
+        <field name="fee">22000</field>
+        <field name="max_students">2</field>
+        <field name="description"><![CDATA[<p>Collect, clean and visualise data, then build your first predictive model.</p>]]></field>
+    </record>
+    <record id="course_english" model="lms.course">
+        <field name="name">Business English</field>
+        <field name="code">EN110</field>
+        <field name="instructor_id" ref="user_lms_instructor_2"/>
+        <field name="state">published</field>
+        <field name="fee">9000</field>
+        <field name="description"><![CDATA[<p>Professional writing, meetings and presentations in English.</p>]]></field>
+    </record>
+    <record id="course_math" model="lms.course">
+        <field name="name">Advanced Level Mathematics</field>
+        <field name="code">MA301</field>
+        <field name="instructor_id" ref="user_lms_instructor_2"/>
+        <field name="state">draft</field>
+        <field name="fee">12000</field>
+        <field name="description"><![CDATA[<p>Pure and applied mathematics for the A/L syllabus. Not yet open for enrollment.</p>]]></field>
+    </record>
+
+    <!-- Lessons -->
+    <record id="lesson_py_1" model="lms.lesson">
+        <field name="course_id" ref="course_python"/>
+        <field name="sequence">10</field>
+        <field name="name">Getting started with Python</field>
+        <field name="duration_minutes">60</field>
+        <field name="content"><![CDATA[<p>Install Python, run your first script and meet the REPL.</p>]]></field>
+    </record>
+    <record id="lesson_py_2" model="lms.lesson">
+        <field name="course_id" ref="course_python"/>
+        <field name="sequence">20</field>
+        <field name="name">Variables and data types</field>
+        <field name="duration_minutes">90</field>
+    </record>
+    <record id="lesson_py_3" model="lms.lesson">
+        <field name="course_id" ref="course_python"/>
+        <field name="sequence">30</field>
+        <field name="name">Control flow</field>
+        <field name="duration_minutes">90</field>
+    </record>
+    <record id="lesson_py_4" model="lms.lesson">
+        <field name="course_id" ref="course_python"/>
+        <field name="sequence">40</field>
+        <field name="name">Functions and modules</field>
+        <field name="duration_minutes">120</field>
+    </record>
+
+    <record id="lesson_ds_1" model="lms.lesson">
+        <field name="course_id" ref="course_data_science"/>
+        <field name="sequence">10</field>
+        <field name="name">What is data science?</field>
+        <field name="duration_minutes">45</field>
+    </record>
+    <record id="lesson_ds_2" model="lms.lesson">
+        <field name="course_id" ref="course_data_science"/>
+        <field name="sequence">20</field>
+        <field name="name">Cleaning data with pandas</field>
+        <field name="duration_minutes">120</field>
+    </record>
+    <record id="lesson_ds_3" model="lms.lesson">
+        <field name="course_id" ref="course_data_science"/>
+        <field name="sequence">30</field>
+        <field name="name">Visualising data</field>
+        <field name="duration_minutes">90</field>
+    </record>
+
+    <record id="lesson_en_1" model="lms.lesson">
+        <field name="course_id" ref="course_english"/>
+        <field name="sequence">10</field>
+        <field name="name">Writing professional emails</field>
+        <field name="duration_minutes">60</field>
+    </record>
+    <record id="lesson_en_2" model="lms.lesson">
+        <field name="course_id" ref="course_english"/>
+        <field name="sequence">20</field>
+        <field name="name">Running effective meetings</field>
+        <field name="duration_minutes">60</field>
+    </record>
+    <record id="lesson_en_3" model="lms.lesson">
+        <field name="course_id" ref="course_english"/>
+        <field name="sequence">30</field>
+        <field name="name">Giving presentations</field>
+        <field name="duration_minutes">90</field>
+    </record>
+
+    <record id="lesson_ma_1" model="lms.lesson">
+        <field name="course_id" ref="course_math"/>
+        <field name="sequence">10</field>
+        <field name="name">Functions and graphs</field>
+        <field name="duration_minutes">90</field>
+    </record>
+
+    <!-- Enrollments -->
+    <record id="enrollment_1" model="lms.enrollment">
+        <field name="course_id" ref="course_python"/>
+        <field name="student_id" ref="user_lms_student_1"/>
+        <field name="state">completed</field>
+        <field name="completed_lesson_ids" eval="[(6, 0, [ref('lesson_py_1'), ref('lesson_py_2'), ref('lesson_py_3'), ref('lesson_py_4')])]"/>
+        <field name="grade">82</field>
+    </record>
+    <record id="enrollment_2" model="lms.enrollment">
+        <field name="course_id" ref="course_python"/>
+        <field name="student_id" ref="user_lms_student_2"/>
+        <field name="completed_lesson_ids" eval="[(6, 0, [ref('lesson_py_1'), ref('lesson_py_2')])]"/>
+    </record>
+    <record id="enrollment_3" model="lms.enrollment">
+        <field name="course_id" ref="course_python"/>
+        <field name="student_id" ref="user_lms_student_3"/>
+        <field name="completed_lesson_ids" eval="[(6, 0, [ref('lesson_py_1')])]"/>
+    </record>
+    <record id="enrollment_4" model="lms.enrollment">
+        <field name="course_id" ref="course_data_science"/>
+        <field name="student_id" ref="user_lms_student_1"/>
+        <field name="completed_lesson_ids" eval="[(6, 0, [ref('lesson_ds_1')])]"/>
+    </record>
+    <record id="enrollment_5" model="lms.enrollment">
+        <field name="course_id" ref="course_data_science"/>
+        <field name="student_id" ref="user_lms_student_2"/>
+        <field name="completed_lesson_ids" eval="[(6, 0, [ref('lesson_ds_1'), ref('lesson_ds_2')])]"/>
+    </record>
+    <record id="enrollment_6" model="lms.enrollment">
+        <field name="course_id" ref="course_english"/>
+        <field name="student_id" ref="user_lms_student_3"/>
+        <field name="state">completed</field>
+        <field name="completed_lesson_ids" eval="[(6, 0, [ref('lesson_en_1'), ref('lesson_en_2'), ref('lesson_en_3')])]"/>
+        <field name="grade">68</field>
+    </record>
+    <record id="enrollment_7" model="lms.enrollment">
+        <field name="course_id" ref="course_english"/>
+        <field name="student_id" ref="user_lms_student_4"/>
+        <field name="completed_lesson_ids" eval="[(6, 0, [ref('lesson_en_1')])]"/>
+    </record>
+    <record id="enrollment_8" model="lms.enrollment">
+        <field name="course_id" ref="course_english"/>
+        <field name="student_id" ref="user_lms_student_1"/>
+        <field name="state">dropped</field>
+    </record>
+</odoo>

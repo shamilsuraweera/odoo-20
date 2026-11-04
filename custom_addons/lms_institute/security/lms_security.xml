@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record model="res.groups.privilege" id="res_groups_privilege_lms">
+        <field name="name">Learning</field>
+        <field name="sequence">40</field>
+        <field name="category_id" ref="base.module_category_services"/>
+    </record>
+
+    <record id="group_lms_student" model="res.groups">
+        <field name="name">Student</field>
+        <field name="sequence">10</field>
+        <field name="comment">Can browse published courses, enroll, and see their own lessons, progress and grades.</field>
+        <field name="privilege_id" ref="res_groups_privilege_lms"/>
+    </record>
+
+    <record id="group_lms_instructor" model="res.groups">
+        <field name="name">Instructor</field>
+        <field name="sequence">20</field>
+        <field name="comment">Can manage their own courses and lessons, and grade the students enrolled in them.</field>
+        <field name="implied_ids" eval="[(4, ref('group_lms_student'))]"/>
+        <field name="privilege_id" ref="res_groups_privilege_lms"/>
+    </record>
+
+    <record id="group_lms_manager" model="res.groups">
+        <field name="name">Manager</field>
+        <field name="sequence">30</field>
+        <field name="comment">Full access to every course, lesson and enrollment.</field>
+        <field name="implied_ids" eval="[(4, ref('group_lms_instructor'))]"/>
+        <field name="privilege_id" ref="res_groups_privilege_lms"/>
+        <field name="user_ids" eval="[(4, ref('base.user_root')), (4, ref('base.user_admin'))]"/>
+    </record>
+</odoo>

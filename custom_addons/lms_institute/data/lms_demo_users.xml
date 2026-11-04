@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo noupdate="1">
+    <!-- Demo logins: the password is the same as the login -->
+    <record id="user_lms_manager" model="res.users">
+        <field name="name">Maya Fernando</field>
+        <field name="login">lms_manager</field>
+        <field name="password">lms_manager</field>
+        <field name="email">maya.fernando@example.com</field>
+        <field name="group_ids" eval="[(6, 0, [ref('base.group_user'), ref('group_lms_manager')])]"/>
+    </record>
+
+    <record id="user_lms_instructor_1" model="res.users">
+        <field name="name">Dr. Nuwan Perera</field>
+        <field name="login">lms_instructor1</field>
+        <field name="password">lms_instructor1</field>
+        <field name="email">nuwan.perera@example.com</field>
+        <field name="group_ids" eval="[(6, 0, [ref('base.group_user'), ref('group_lms_instructor')])]"/>
+    </record>
+    <record id="user_lms_instructor_2" model="res.users">
+        <field name="name">Ms. Ishara Silva</field>
+        <field name="login">lms_instructor2</field>
+        <field name="password">lms_instructor2</field>
+        <field name="email">ishara.silva@example.com</field>
+        <field name="group_ids" eval="[(6, 0, [ref('base.group_user'), ref('group_lms_instructor')])]"/>
+    </record>
+
+    <record id="user_lms_student_1" model="res.users">
+        <field name="name">Kasun Jayasinghe</field>
+        <field name="login">lms_student1</field>
+        <field name="password">lms_student1</field>
+        <field name="email">kasun.j@example.com</field>
+        <field name="group_ids" eval="[(6, 0, [ref('base.group_user'), ref('group_lms_student')])]"/>
+    </record>
+    <record id="user_lms_student_2" model="res.users">
+        <field name="name">Dilini Wickramasinghe</field>
+        <field name="login">lms_student2</field>
+        <field name="password">lms_student2</field>
+        <field name="email">dilini.w@example.com</field>
+        <field name="group_ids" eval="[(6, 0, [ref('base.group_user'), ref('group_lms_student')])]"/>
+    </record>
+    <record id="user_lms_student_3" model="res.users">
+        <field name="name">Tharindu Bandara</field>
+        <field name="login">lms_student3</field>
+        <field name="password">lms_student3</field>
+        <field name="email">tharindu.b@example.com</field>
+        <field name="group_ids" eval="[(6, 0, [ref('base.group_user'), ref('group_lms_student')])]"/>
+    </record>
+    <record id="user_lms_student_4" model="res.users">
+        <field name="name">Sanduni Rajapaksha</field>
+        <field name="login">lms_student4</field>
+        <field name="password">lms_student4</field>
+        <field name="email">sanduni.r@example.com</field>
+        <field name="group_ids" eval="[(6, 0, [ref('base.group_user'), ref('group_lms_student')])]"/>
+    </record>
+</odoo>

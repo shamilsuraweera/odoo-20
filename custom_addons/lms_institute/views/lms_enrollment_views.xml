@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="lms_enrollment_view_search" model="ir.ui.view">
+        <field name="name">lms.enrollment.search</field>
+        <field name="model">lms.enrollment</field>
+        <field name="arch" type="xml">
+            <search string="Enrollments">
+                <field name="student_id"/>
+                <field name="course_id"/>
+                <filter name="enrolled" string="Enrolled" domain="[('state', '=', 'enrolled')]"/>
+                <filter name="completed" string="Completed" domain="[('state', '=', 'completed')]"/>
+                <filter name="dropped" string="Dropped" domain="[('state', '=', 'dropped')]"/>
+                <group>
+                    <filter name="group_course" string="Course" context="{'group_by': 'course_id'}"/>
+                    <filter name="group_student" string="Student" context="{'group_by': 'student_id'}"/>
+                    <filter name="group_state" string="Status" context="{'group_by': 'state'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <record id="lms_enrollment_view_list" model="ir.ui.view">
+        <field name="name">lms.enrollment.list</field>
+        <field name="model">lms.enrollment</field>
+        <field name="arch" type="xml">
+            <list string="Enrollments">
+                <field name="student_id"/>
+                <field name="course_id"/>
+                <field name="enrollment_date"/>
+                <field name="progress" widget="progressbar"/>
+                <field name="grade"/>
+                <field name="grade_letter"/>
+                <field name="state" widget="badge"
+                       decoration-success="state == 'completed'"
+                       decoration-info="state == 'enrolled'"
+                       decoration-muted="state == 'dropped'"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="lms_enrollment_view_form" model="ir.ui.view">
+        <field name="name">lms.enrollment.form</field>
+        <field name="model">lms.enrollment</field>
+        <field name="arch" type="xml">
+            <form string="Enrollment">
+                <header>
+                    <button name="action_complete" string="Mark Completed" type="object" class="btn-primary"
+                            invisible="state != 'enrolled'" groups="lms_institute.group_lms_instructor"/>
+                    <button name="action_drop" string="Drop" type="object"
+                            invisible="state != 'enrolled'" groups="lms_institute.group_lms_instructor"/>
+                    <button name="action_reenroll" string="Re-enroll" type="object"
+                            invisible="state == 'enrolled'" groups="lms_institute.group_lms_instructor"/>
+                    <field name="state" widget="statusbar" statusbar_visible="enrolled,completed"/>
+                </header>
+                <sheet>
+                    <group>
+                        <group>
+                            <field name="student_id" options="{'no_create': True}"/>
+                            <field name="course_id" options="{'no_create': True}"/>
+                            <field name="enrollment_date"/>
+                        </group>
+                        <group>
+                            <field name="progress" widget="progressbar"/>
+                            <field name="grade"/>
+                            <field name="grade_letter"/>
+                        </group>
+                    </group>
+                    <notebook>
+                        <page string="Lesson Progress" name="progress">
+                            <field name="completed_lesson_ids" widget="many2many_tags"/>
+                        </page>
+                    </notebook>
+                </sheet>
+                <chatter/>
+            </form>
+        </field>
+    </record>
+
+    <record id="lms_enrollment_action" model="ir.actions.act_window">
+        <field name="name">Enrollments</field>
+        <field name="res_model">lms.enrollment</field>
+        <field name="view_mode">list,form</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">No enrollments yet</p>
+            <p>Open a published course and click Enroll me to get started.</p>
+        </field>
+    </record>
+</odoo>

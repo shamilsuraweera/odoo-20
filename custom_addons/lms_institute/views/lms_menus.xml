@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <menuitem id="menu_lms_root" name="Learning" sequence="45"
+              web_icon="lms_institute,static/description/icon.svg"
+              groups="group_lms_student"/>
+    <menuitem id="menu_lms_courses" name="Courses" parent="menu_lms_root"
+              action="lms_course_action" sequence="10"/>
+    <menuitem id="menu_lms_enrollments" name="Enrollments" parent="menu_lms_root"
+              action="lms_enrollment_action" sequence="20"/>
+    <menuitem id="menu_lms_lessons" name="Lessons" parent="menu_lms_root"
+              action="lms_lesson_action" sequence="30"
+              groups="group_lms_instructor"/>
+</odoo>

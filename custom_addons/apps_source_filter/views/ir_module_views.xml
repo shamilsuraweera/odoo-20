@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_module_filter_source" model="ir.ui.view">
+        <field name="name">ir.module.module.search.source</field>
+        <field name="model">ir.module.module</field>
+        <field name="inherit_id" ref="base.view_module_filter"/>
+        <field name="arch" type="xml">
+            <xpath expr="//searchpanel/field[@name='category_id']" position="before">
+                <field name="module_source" string="Source" enable_counters="1"/>
+            </xpath>
+            <xpath expr="//filter[@name='not_installed']" position="after">
+                <separator/>
+                <filter name="custom_modules" string="Custom Modules" domain="[('module_source', '=', 'custom')]"/>
+            </xpath>
+        </field>
+    </record>
+</odoo>

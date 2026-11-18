@@ -3,3 +3,5 @@
 odoo-c/
 odoo-e/
 source-code/
+__pycache__/
+*.py[cod]
